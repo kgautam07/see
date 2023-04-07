@@ -1,0 +1,118 @@
+http://clabsql.clamv.jacobs-university.de/~wblake/pair16_sprint1/
+
+
+Readme:
+
+Currently, the project has a GUI setup, along with a functional map display (output only).
+- For the GUI, only Menu Navigation and dropBox inputs has been completed, 'index.html' contains 6 divisions, representing 6 pages (separate UIs).
+- Temporarily, map dimensions (xlen ylen) are held using 'sessionStorage', set in 'index.html'.
+- Sample code to update a tile's display:  setTileText(getTileID({x:0,y:0}), '2');
+- All Map Display code can be found in 'board-layout' files.
+
+For someone new to this project, I would recommend to start by reading 'index.html' & 'page-control.js'.
+Next read all files containing class & method declarations. Skip 'board-layout*' files unless you are reprogramming the display board.
+
+
+
+FOR TA GRADING: 23/3/2023
+
+Achievements:
+- Got index.html up and running on William's public_html, see http://clabsql.clamv.jacobs-university.de/~wblake/pair16_sprint1/
+- Created the basic GUI
+- Cell interaction functions
+- Functional display hexmap board
+- Class declarations & definitions
+
+Explicit Achievements:
+- Runs on CLAMV
+- Created the basic GUI
+    - 6 GUI "pages" represented by divs in index.html
+    - working navigation buttons using 'page-control.js'
+    - the 'logs' button was not specified as a UI, so we only created it and left it functionless
+- Hexmap board representation
+    - adjustable size from 1x1 to 22x22
+    - setTileText() and getTileID() to set output display values
+    - sessionStorage contains variables xlen ylen (board dimensions)
+    - 'board-layout-hexes.js'
+        - draws hexagons over the boardspace using canvas
+        - hexagon layout was hand-calculated with trigonometry
+    - 'board-layout-text.js'
+        - 'boardLayoutDivisions' function to fill the boardspace with divs (having unique IDs)
+        - 'setTileText' function and 'getTileID' function to change text in these boardspace divs
+        - uses svg to make tiny text fit --> max board size (22x22) tiles fitting in (680x640)px
+- Setup the 'logic' folder, which houses all game logic files listed in the UML
+    - all game logic files are exported classes which are then imported to logicEngine.js outside the folder
+    - Class declarations & many helper function definitions completed
+    - each file implements the necessary function declarations as according to the specification:
+        - world.js implements the following:
+            - World class 
+            - adjacent function
+            - sensedCell function
+            - isObstructedAt function
+            - isOccupiedAt function
+            - setBugAt function
+            - getBugAt function
+            - removeBugAt function
+            - setFoodAt function
+            - getFoodAt function
+            - isFriendlyBaseAt function
+            - isEnemyBaseAt function
+            - setMarkerAt function
+            - clearMarkerAt function
+            - isFriendlyMarkerAt function
+            - isEnemyMarkerAt function
+            - functions that were left empty since no specified usage in the specification:
+                - toString function
+                - turn function
+            - functions which were created to support function usage:
+                - outOfBounds function
+                - cellAt function
+        - worldcell.js implements the following:
+            - WorldCell class 
+            - Condition property(BugCondition in specification)
+            - isObstructed function
+            - isOccupied function
+            - setBug function
+            - getBug function
+            - removeBug function
+            - setFood function
+            - isFriendlyBase function
+            - isEnemyBase function
+            - setMarker function
+            - clearMarker function
+            - isFriendlyMarker function
+            - isEnemyMarker function
+            - cellMatches function
+            - functions that were left empty since no specified usage in the specification:
+                - toString function
+        - bug.js implements the following:
+            - Bug class 
+            - kill function
+            - getPosition
+            - functions that were left empty since no specified usage in the specification:
+                - toString function        
+        - bugBrain.js implements the following:
+            -BugBrain class
+            -getNextInstruction function left empty since instruction not implemented yet
+        - position.js implements the following:
+            -Position class
+
+Potential Improvements:
+- improve max board size (22x22 in 680x640px); beyond this, text cant shrink to fit inside the divs.
+- functional testcases for all function declarations, many cannot be tested as requires additional modules from Bug Assembly
+
+Implementation choices:
+- using one html page for all 6 UIs needed. (One division per page, divisions overlap)
+ - more organization will be needed; effectively one massive file.
+ - passing information from one "page" to another is easy.
+- JavaScript functions will be sectioned into suitable seperate files and folders according to the specifications
+- Map Visual Representation is a canvas hexagon map, overlapping with a steggered grid of divisions, containing svg viewboxes displaying text.
+ - best way we found so far to compress chars to small size with basic javascript; needs to fit within 30x30px divisions.
+- used sessionStorage to hold variables xlen ylen (board dimensions) because we could not yet decide to make global
+
+Untouched ideas:
+- currently everything is pixel-scaled. switch to percentages% in css.
+- upload world file, read world file.
+- data representation of the board. (variables)
+- improve max board size (22x22 in 680x640px); beyond this, text cant shrink to fit inside the divs.
+- test cases; so far only have a disabled function to update the map display.
